@@ -7,7 +7,7 @@ ignore: ['**/.*', 'node_modules', 'components']
 dependencies:
   'console-polyfill': '~0.1.0'
   jquery: '~2.0.3'
-  'bootstrap-stylus': '2.3.2'
+  'bootstrap': '2.3.2'
   'angular-bootstrap': '~0.5.0'
   angular: '1.2.12'
   'angular-sanitize': '1.2.12'

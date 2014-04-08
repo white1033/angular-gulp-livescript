@@ -15,7 +15,7 @@ gulp.task 'template' ->
   gulp.src 'app/partials/*.jade'
     .pipe gulp-jade!
     .pipe gulp-angular-templatecache 'partials.js' do
-      base: "#{process.cwd()}/app"
+      base: "#{process.cwd!}/app"
       filename: 'partials.js'
       module: 'partials'
       standalone: true
@@ -37,13 +37,11 @@ gulp.task 'js:vendor' <[bower]> ->
     .pipe gulp.dest '_public/js'
     .pipe livereload!
 
-gulp.task 'css' ->
+gulp.task 'css' <[bower]> ->
   bower = gulp-bower-files!
-    .pipe gulp-filter -> it.path is /\.styl$/
-    .pipe gulp-stylus use: <[nib]>
+    .pipe gulp-filter -> it.path is /\.css$/
 
-  styl = gulp.src 'app/styles/**/*.styl'
-    .pipe gulp-filter -> it.path isnt /_[^/]+\.styl$/
+  styl = gulp.src 'app/styles/*.styl'
     .pipe gulp-stylus use: <[nib]>
 
   streamqueue { +objectMode }
@@ -62,7 +60,7 @@ gulp.task 'dev' <[server template js:app js:vendor css assets]> ->
     return gutil.log it if it
   gulp.watch ['app/partials/*.jade'] <[template]>
   gulp.watch ['app/**/*.ls'] <[js:app]>
-  gulp.watch ['app/styles/**/*.styl'] <[css]>
+  gulp.watch ['app/styles/*.styl'] <[css]>
   gulp.watch ['app/index.jade'] <[jade:app]>
 
 gulp.task 'jade:app' ->
